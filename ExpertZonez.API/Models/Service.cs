@@ -1,4 +1,5 @@
 ﻿
+using ExpertZonez.API.Models;
 using System.ComponentModel.DataAnnotations;
 
 public class Service
@@ -12,7 +13,12 @@ public class Service
     [StringLength(500)]
     public string? serviceDescription { get; set; }
 
-    public string? serviceIcon { get; set; } // URL or CSS class name
+    public string serviceImage { get; set; } // URL or CSS class name
+
+
+    //foreign key of ServiceGenre Table
+    public int genreId { get; set; }
+    public ServiceGenre Genre { get; set; }
 
     // Navigation property for Many-to-Many
     public virtual ICollection<WorkerService> workerServices { get; set; } = new List<WorkerService>();

@@ -1,4 +1,4 @@
-﻿namespace ExpertZonez.API.DTOs
+﻿namespace ExpertZonez.API.Models.DTOs
 {
     public class CreateRequestDto
     {

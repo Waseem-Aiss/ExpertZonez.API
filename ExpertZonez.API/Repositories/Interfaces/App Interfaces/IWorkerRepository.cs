@@ -1,4 +1,4 @@
-﻿using ExpertZonez.API.DTOs;
+﻿using ExpertZonez.API.Models.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpertZonez.API.Repositories.Interfaces

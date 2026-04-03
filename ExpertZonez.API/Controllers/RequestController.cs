@@ -1,9 +1,9 @@
 ﻿using ExpertZonez.API.Data;
-using ExpertZonez.API.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ExpertZonez.API.Models.Enums;
 using ExpertZonez.API.Repositories.Interfaces;
+using ExpertZonez.API.Models.DTOs;
 
 namespace ExpertZonez.API.Controllers
 {

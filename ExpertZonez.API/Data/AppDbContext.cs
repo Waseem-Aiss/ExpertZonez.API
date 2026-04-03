@@ -1,4 +1,5 @@
 ﻿
+using ExpertZonez.API.Models;
 using ExpertZonez.API.Models.Enums;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Emit;
@@ -16,6 +17,7 @@ namespace ExpertZonez.API.Data
         public DbSet<WorkerService> WorkerServices { get; set; }
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
         public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<ServiceGenre> ServiceGenres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

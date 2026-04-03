@@ -1,5 +1,5 @@
 ﻿using ExpertZonez.API.Data;
-using ExpertZonez.API.DTOs;
+using ExpertZonez.API.Models.DTOs;
 using ExpertZonez.API.Models.Enums;
 using ExpertZonez.API.Repositories.Implementation;
 using ExpertZonez.API.Repositories.Interfaces;

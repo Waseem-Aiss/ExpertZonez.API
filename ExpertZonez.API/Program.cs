@@ -1,6 +1,8 @@
 using ExpertZonez.API.Data;
 using ExpertZonez.API.Repositories.Implementation;
+using ExpertZonez.API.Repositories.Implementation.App_Implementation;
 using ExpertZonez.API.Repositories.Interfaces;
+using ExpertZonez.API.Repositories.Interfaces.App_Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IAdminRepository,AdminRepository >();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IWorkerRepository, WorkerRepository>();
+builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 
 builder.Services.AddEndpointsApiExplorer(); 
 builder.Services.AddSwaggerGen(); 

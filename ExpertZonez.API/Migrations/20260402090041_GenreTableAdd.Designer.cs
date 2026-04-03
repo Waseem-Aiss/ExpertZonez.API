@@ -4,6 +4,7 @@ using ExpertZonez.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpertZonez.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260402090041_GenreTableAdd")]
+    partial class GenreTableAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -100,18 +103,18 @@ namespace ExpertZonez.API.Migrations
 
             modelBuilder.Entity("ExpertZonez.API.Models.ServiceGenre", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("genreId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("genreId"));
 
                     b.Property<string>("genreName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("genreId");
 
                     b.ToTable("ServiceGenres");
                 });
@@ -124,7 +127,7 @@ namespace ExpertZonez.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("serviceId"));
 
-                    b.Property<int>("GenreId")
+                    b.Property<int>("genreId")
                         .HasColumnType("int");
 
                     b.Property<string>("serviceDescription")
@@ -141,7 +144,7 @@ namespace ExpertZonez.API.Migrations
 
                     b.HasKey("serviceId");
 
-                    b.HasIndex("GenreId");
+                    b.HasIndex("genreId");
 
                     b.ToTable("Services");
                 });
@@ -280,7 +283,7 @@ namespace ExpertZonez.API.Migrations
                 {
                     b.HasOne("ExpertZonez.API.Models.ServiceGenre", "Genre")
                         .WithMany("services")
-                        .HasForeignKey("GenreId")
+                        .HasForeignKey("genreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

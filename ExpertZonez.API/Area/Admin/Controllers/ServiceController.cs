@@ -1,5 +1,5 @@
 ﻿using ExpertZonez.API.Data;
-using ExpertZonez.API.DTOs;
+using ExpertZonez.API.Models.DTOs;
 using ExpertZonez.API.Models.Enums;
 using ExpertZonez.API.Repositories.Implementation;
 using ExpertZonez.API.Repositories.Interfaces;
@@ -10,7 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.Eventing.Reader;
 namespace ExpertZonez.API.Area.Admin.Controllers
 {
-    
+
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ServiceController : ControllerBase
@@ -57,10 +58,11 @@ namespace ExpertZonez.API.Area.Admin.Controllers
             var foundData = await _repo.GetDeleteService(id);
             return (foundData);
         }
-        [HttpPost("delete-service")]
-        public async Task<IActionResult> DeleteService(Service obj)
+        [HttpDelete("delete-service/{id}")]
+        public async Task<IActionResult> DeleteService(int id)
         {
-            bool isDeleted = await _repo.DeleteService(obj);
+            await _repo.DeleteService(id);
+            
             return Ok("Deleted Seccessfull");
         }
         [HttpGet("get-edit-preview")]
@@ -69,7 +71,7 @@ namespace ExpertZonez.API.Area.Admin.Controllers
             Service foundData = await _repo.GetEditService(id);
             return (foundData);
         }
-        [HttpPost("edit-service")]
+        [HttpPut("edit-service")]
         public async Task<Service> EditService(Service obj)
         {
             Service UpdatedData = await _repo.EditService(obj);

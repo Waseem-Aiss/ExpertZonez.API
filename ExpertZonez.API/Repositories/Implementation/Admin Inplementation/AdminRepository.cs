@@ -1,10 +1,10 @@
 ﻿using ExpertZonez.API.Data;
-using ExpertZonez.API.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ExpertZonez.API.Models.Enums;
 using Microsoft.AspNetCore.Server.Kestrel.Transport.NamedPipes;
 using ExpertZonez.API.Repositories.Interfaces;
+using ExpertZonez.API.Models.DTOs;
 
 
 namespace ExpertZonez.API.Repositories.Implementation
@@ -69,7 +69,8 @@ namespace ExpertZonez.API.Repositories.Implementation
             {
                 serviceName = serviceDto.serviceName,
                 serviceDescription = serviceDto.serviceDescription,
-                serviceIcon = serviceDto.serviceIcon
+                serviceImage = serviceDto.serviceIcon,
+                genreId = serviceDto.serviceGenreId
             };
 
             _dbContext.Services.Add(service);
@@ -87,11 +88,12 @@ namespace ExpertZonez.API.Repositories.Implementation
             Service foundService = await _dbContext.Services.FindAsync(id);
             return foundService;
         }
-        public async Task<bool> DeleteService(Service obj)
+        public async Task DeleteService(int id)
         {
-                    _dbContext.Services.Remove(obj);
-            int rowsAffected = await _dbContext.SaveChangesAsync();
-            return rowsAffected > 0;
+            var serviceData = await _dbContext.Services.FindAsync(id);
+
+             _dbContext.Services.Remove(serviceData);
+            _dbContext.SaveChangesAsync();
             
         }
         public async Task<Service> GetEditService(int id)
