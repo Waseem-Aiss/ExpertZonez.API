@@ -114,6 +114,33 @@ namespace ExpertZonez.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ServiceGenres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            genreName = "Plumbing"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            genreName = "Electrical"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            genreName = "Carpenter"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            genreName = "Painter"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            genreName = "Core Cutter"
+                        });
                 });
 
             modelBuilder.Entity("Service", b =>
@@ -131,7 +158,7 @@ namespace ExpertZonez.API.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("serviceIcon")
+                    b.Property<string>("serviceImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("serviceName")
@@ -144,6 +171,43 @@ namespace ExpertZonez.API.Migrations
                     b.HasIndex("GenreId");
 
                     b.ToTable("Services");
+
+                    b.HasData(
+                        new
+                        {
+                            serviceId = 1,
+                            GenreId = 1,
+                            serviceDescription = "All plumbing works",
+                            serviceName = "Plumber"
+                        },
+                        new
+                        {
+                            serviceId = 2,
+                            GenreId = 2,
+                            serviceDescription = "Electrical repairs",
+                            serviceName = "Electrician"
+                        },
+                        new
+                        {
+                            serviceId = 3,
+                            GenreId = 3,
+                            serviceDescription = "Wood work",
+                            serviceName = "Carpenter"
+                        },
+                        new
+                        {
+                            serviceId = 4,
+                            GenreId = 4,
+                            serviceDescription = "Painting services",
+                            serviceName = "Painter"
+                        },
+                        new
+                        {
+                            serviceId = 5,
+                            GenreId = 5,
+                            serviceDescription = "Concrete cutting",
+                            serviceName = "Core Cutter"
+                        });
                 });
 
             modelBuilder.Entity("ServiceRequest", b =>

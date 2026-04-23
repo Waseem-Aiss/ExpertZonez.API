@@ -12,7 +12,9 @@ namespace ExpertZonez.API.Repositories.Implementation
         {
          _context = context;   
         }
-        public async Task<Worker> RegisterWorker(RegisterWorkerDto dto)
+
+        // Register a New Wo
+        public async Task<WorkerResponseDto> Repo_RegisterWorker(RegisterWorkerDto dto)
         {
             var worker = new Worker
             {
@@ -22,7 +24,8 @@ namespace ExpertZonez.API.Repositories.Implementation
                 workerExperienceYears = dto.workerExperienceYears,
                 workerAddress = dto.workerAddress,
                 didWorkerIsApproved = false,
-                didWorkerIsActive = false
+                didWorkerIsActive = false,
+                WorkerServices = new List<WorkerService>()
             };
 
 
@@ -33,7 +36,16 @@ namespace ExpertZonez.API.Repositories.Implementation
 
             _context.Workers.Add(worker);
             await _context.SaveChangesAsync();
-            return worker;
+
+            return new WorkerResponseDto
+            {
+                workerName = worker.workerName,
+                workerPhoneNumber = worker.workerPhoneNumber,
+                workerCNIC = worker.workerCNIC,
+                workerExperienceYears = worker.workerExperienceYears,
+                workerAddress = worker.workerAddress,
+
+                serviceIds = worker.WorkerServices.Select(ws => ws.serviceId).ToList() };
         }
 
     }

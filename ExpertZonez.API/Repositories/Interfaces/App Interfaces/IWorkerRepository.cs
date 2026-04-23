@@ -5,7 +5,7 @@ namespace ExpertZonez.API.Repositories.Interfaces
 {
     public interface IWorkerRepository
     {
-        public Task<Worker> RegisterWorker(RegisterWorkerDto dto);
+         Task<WorkerResponseDto> Repo_RegisterWorker(RegisterWorkerDto dto);
 
     }
 }

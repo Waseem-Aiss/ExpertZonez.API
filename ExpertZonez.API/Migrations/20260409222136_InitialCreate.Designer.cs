@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpertZonez.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260402090041_GenreTableAdd")]
-    partial class GenreTableAdd
+    [Migration("20260409222136_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,20 +103,47 @@ namespace ExpertZonez.API.Migrations
 
             modelBuilder.Entity("ExpertZonez.API.Models.ServiceGenre", b =>
                 {
-                    b.Property<int>("genreId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("genreId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("genreName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("genreId");
+                    b.HasKey("Id");
 
                     b.ToTable("ServiceGenres");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            genreName = "Plumbing"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            genreName = "Electrical"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            genreName = "Carpenter"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            genreName = "Painter"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            genreName = "Core Cutter"
+                        });
                 });
 
             modelBuilder.Entity("Service", b =>
@@ -127,14 +154,14 @@ namespace ExpertZonez.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("serviceId"));
 
-                    b.Property<int>("genreId")
+                    b.Property<int>("GenreId")
                         .HasColumnType("int");
 
                     b.Property<string>("serviceDescription")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("serviceIcon")
+                    b.Property<string>("serviceImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("serviceName")
@@ -144,9 +171,46 @@ namespace ExpertZonez.API.Migrations
 
                     b.HasKey("serviceId");
 
-                    b.HasIndex("genreId");
+                    b.HasIndex("GenreId");
 
                     b.ToTable("Services");
+
+                    b.HasData(
+                        new
+                        {
+                            serviceId = 1,
+                            GenreId = 1,
+                            serviceDescription = "All plumbing works",
+                            serviceName = "Plumber"
+                        },
+                        new
+                        {
+                            serviceId = 2,
+                            GenreId = 2,
+                            serviceDescription = "Electrical repairs",
+                            serviceName = "Electrician"
+                        },
+                        new
+                        {
+                            serviceId = 3,
+                            GenreId = 3,
+                            serviceDescription = "Wood work",
+                            serviceName = "Carpenter"
+                        },
+                        new
+                        {
+                            serviceId = 4,
+                            GenreId = 4,
+                            serviceDescription = "Painting services",
+                            serviceName = "Painter"
+                        },
+                        new
+                        {
+                            serviceId = 5,
+                            GenreId = 5,
+                            serviceDescription = "Concrete cutting",
+                            serviceName = "Core Cutter"
+                        });
                 });
 
             modelBuilder.Entity("ServiceRequest", b =>
@@ -283,7 +347,7 @@ namespace ExpertZonez.API.Migrations
                 {
                     b.HasOne("ExpertZonez.API.Models.ServiceGenre", "Genre")
                         .WithMany("services")
-                        .HasForeignKey("genreId")
+                        .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

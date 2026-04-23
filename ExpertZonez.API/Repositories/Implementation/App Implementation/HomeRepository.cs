@@ -19,6 +19,8 @@ namespace ExpertZonez.API.Repositories.Implementation.App_Implementation
 
             return await _dbContext.ServiceGenres.ToListAsync();
         }
+
+
         public async Task<(IEnumerable<Service> services, int totalPages)> GetServices(string sTerm = "", int genreId = 0,
                 int pageSize = 8, int pageNumber = 1)
             {
@@ -26,7 +28,7 @@ namespace ExpertZonez.API.Repositories.Implementation.App_Implementation
 
                 var service = from services in _dbContext.Services
                            join Genre in _dbContext.ServiceGenres
-                           on services.genreId equals Genre.Id
+                           on services.GenreId equals Genre.Id
                            where string.IsNullOrWhiteSpace(sTerm) || (services != null && services.serviceName.ToLower().StartsWith(sTerm))
                            select new Service
                            {
@@ -34,14 +36,14 @@ namespace ExpertZonez.API.Repositories.Implementation.App_Implementation
                              //  Image = service.serviceId,
                                //AuthorName = Book.AuthorName,
                                serviceName = services.serviceName,
-                               genreId = services.genreId,
+                               GenreId = services.GenreId,
                                serviceImage = services.serviceImage, 
                               // Price = Book.Price,
                                Genre=Genre                       };
 
                 if (genreId > 0)
                 {
-                    service = service.Where(a => a.genreId == genreId);
+                    service = service.Where(a => a.GenreId == genreId);
                 }
 
                 int totalServices = await service.CountAsync();
@@ -52,7 +54,15 @@ namespace ExpertZonez.API.Repositories.Implementation.App_Implementation
 
             }
 
+        public async Task<IEnumerable<Service>> GetGenreWithServices(int id)
+        {
+
+           var ServicesList =  await _dbContext.Services.Where(x=>x.GenreId==id).ToArrayAsync();
+            
+            return ServicesList;
         }
+
+    }
     }
 
 

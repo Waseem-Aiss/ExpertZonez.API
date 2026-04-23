@@ -13,11 +13,11 @@ public class Service
     [StringLength(500)]
     public string? serviceDescription { get; set; }
 
-    public string serviceImage { get; set; } // URL or CSS class name
+    public string? serviceImage { get; set; } = null; // URL or CSS class name
 
 
     //foreign key of ServiceGenre Table
-    public int genreId { get; set; }
+    public int GenreId { get; set; }
     public ServiceGenre Genre { get; set; }
 
     // Navigation property for Many-to-Many

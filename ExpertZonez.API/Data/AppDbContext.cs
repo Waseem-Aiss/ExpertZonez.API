@@ -23,8 +23,30 @@ namespace ExpertZonez.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Service>()
+    .HasOne(s => s.Genre)
+    .WithMany(g => g.services)
+    .HasForeignKey(s => s.GenreId);
+
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
 
+     
+            modelBuilder.Entity<Service>().HasData(
+                new Service { serviceId = 1, serviceName = "Plumber", serviceDescription = "All plumbing works", GenreId = 1 },
+                new Service { serviceId = 2, serviceName = "Electrician", serviceDescription = "Electrical repairs", GenreId = 2 },
+                new Service { serviceId = 3, serviceName = "Carpenter", serviceDescription = "Wood work", GenreId = 3 },
+                new Service { serviceId = 4, serviceName = "Painter", serviceDescription = "Painting services", GenreId = 4},
+                new Service { serviceId = 5, serviceName = "Core Cutter", serviceDescription = "Concrete cutting", GenreId = 5 }
+            );
+            modelBuilder.Entity<ServiceGenre>().HasData(
+                new ServiceGenre { Id = 1, genreName = "Plumbing" },
+                new ServiceGenre { Id = 2, genreName = "Electrical" },
+                 new ServiceGenre { Id = 3, genreName = "Carpenter" },
+                 new ServiceGenre { Id = 4, genreName = "Painter" },
+                new ServiceGenre {Id = 5, genreName = "Core Cutter" }
+
+        );
         }
     }
 }

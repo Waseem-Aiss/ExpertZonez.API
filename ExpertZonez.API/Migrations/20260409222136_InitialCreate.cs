@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace ExpertZonez.API.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigrationCreateDb : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,18 +32,16 @@ namespace ExpertZonez.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Services",
+                name: "ServiceGenres",
                 columns: table => new
                 {
-                    serviceId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    serviceName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    serviceDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
-                    serviceIcon = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    genreName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Services", x => x.serviceId);
+                    table.PrimaryKey("PK_ServiceGenres", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,6 +63,28 @@ namespace ExpertZonez.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Workers", x => x.workerId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Services",
+                columns: table => new
+                {
+                    serviceId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    serviceName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    serviceDescription = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    serviceImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GenreId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Services", x => x.serviceId);
+                    table.ForeignKey(
+                        name: "FK_Services_ServiceGenres_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "ServiceGenres",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -150,6 +172,30 @@ namespace ExpertZonez.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "ServiceGenres",
+                columns: new[] { "Id", "genreName" },
+                values: new object[,]
+                {
+                    { 1, "Plumbing" },
+                    { 2, "Electrical" },
+                    { 3, "Carpenter" },
+                    { 4, "Painter" },
+                    { 5, "Core Cutter" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Services",
+                columns: new[] { "serviceId", "GenreId", "serviceDescription", "serviceImage", "serviceName" },
+                values: new object[,]
+                {
+                    { 1, 1, "All plumbing works", null, "Plumber" },
+                    { 2, 2, "Electrical repairs", null, "Electrician" },
+                    { 3, 3, "Wood work", null, "Carpenter" },
+                    { 4, 4, "Painting services", null, "Painter" },
+                    { 5, 5, "Concrete cutting", null, "Core Cutter" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Assignments_requestId",
                 table: "Assignments",
@@ -169,6 +215,11 @@ namespace ExpertZonez.API.Migrations
                 name: "IX_ServiceRequests_userId",
                 table: "ServiceRequests",
                 column: "userId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Services_GenreId",
+                table: "Services",
+                column: "GenreId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkerServices_serviceId",
@@ -196,6 +247,9 @@ namespace ExpertZonez.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "Services");
+
+            migrationBuilder.DropTable(
+                name: "ServiceGenres");
         }
     }
 }

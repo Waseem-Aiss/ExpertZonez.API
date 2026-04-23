@@ -21,6 +21,15 @@ builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 builder.Services.AddEndpointsApiExplorer(); 
 builder.Services.AddSwaggerGen(); 
 builder.Services.AddOpenApi();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("expert-zonez-policy", policy =>
+    {
+        policy.WithOrigins("http://localhost:3000") // React Url for API
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -29,6 +38,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger(); 
     app.UseSwaggerUI();
 }
+
+app.UseCors("expert-zonez-policy");
 
 app.UseHttpsRedirection();
 

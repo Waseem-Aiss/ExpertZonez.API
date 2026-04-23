@@ -5,16 +5,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExpertZonez.API.Repositories.Implementation
 {
-    public class GenreRepository:IGenreRepository
+    public class GenreRepository : IGenreRepository
     {
         private readonly AppDbContext _context;
         public GenreRepository(AppDbContext _dbcontext)
         {
             _context = _dbcontext;
-            
+
         }
 
-       public async Task AddGenre(ServiceGenre genre)
+        public async Task AddGenre(ServiceGenre genre)
         {
             _context.ServiceGenres.Add(genre);
             _context.SaveChanges();
@@ -28,14 +28,14 @@ namespace ExpertZonez.API.Repositories.Implementation
 
         public async Task<ServiceGenre> GetGenreById(int id)
         {
-          ServiceGenre genById =  await _context.ServiceGenres.FindAsync(id);
+            ServiceGenre genById = await _context.ServiceGenres.FindAsync(id);
             return genById;
         }
 
         public async Task<ServiceGenre> GetGenreWithServices(int id)
         {
-          ServiceGenre GenreServices =   await _context.ServiceGenres.Include(x => x.services)
-                .FirstOrDefaultAsync(u=>u.Id == id);
+            ServiceGenre GenreServices = await _context.ServiceGenres.Include(x => x.services)
+                  .FirstOrDefaultAsync(u => u.Id == id);
             return GenreServices;
         }
 
@@ -43,5 +43,8 @@ namespace ExpertZonez.API.Repositories.Implementation
         {
             _context.ServiceGenres.Update(genre);
         }
+
+
     }
 }
+

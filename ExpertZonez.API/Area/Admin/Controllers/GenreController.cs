@@ -38,8 +38,8 @@ namespace ExpertZonez.API.Area.Admin.Controllers
         {
            await _repo.DeleteGenre(del);
         }
-        [HttpGet("get-genre-with-services")]
-        public async Task<ServiceGenre> GetGenreWithServices(int id)
+        [HttpGet("get-services-by-genreId")]
+        public async Task<ServiceGenre> GetGenreWithServices_Cont(int id)
         {
            ServiceGenre _serviceGenre = await _repo.GetGenreWithServices(id);
             return _serviceGenre;

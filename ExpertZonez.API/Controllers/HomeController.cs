@@ -41,7 +41,20 @@ namespace ExpertZonez.API.Controllers
                 return (DisplayServices);
             }
 
-           
+        [HttpGet("get-genre")]
+        public async Task<IEnumerable<ServiceGenre>> GetAllGenre()
+        {
+          return  await _homeRepository.Genres();
         }
+       
+        [HttpGet("get-services-by-genreId-homecontr/{id}")]
+        public async Task<IEnumerable<Service>> GetGenreWithServices_Cont(int id)
+        {
+            var servicesList = await _homeRepository.GetGenreWithServices(id);
+            return servicesList;
+        }
+
+
+    }
 }
 

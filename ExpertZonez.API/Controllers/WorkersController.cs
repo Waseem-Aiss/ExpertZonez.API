@@ -17,13 +17,14 @@ namespace ExpertZonez.API.Controllers
             _repo = repo;
         }
 
+        //Register New Worker Action Method
         
         [HttpPost("register-worker")]
         public async Task<IActionResult> RegisterWorker(RegisterWorkerDto dto)
         {
             
-         var registerWorker  =   _repo.RegisterWorker(dto);
-            return Ok(new { message = "Registration successful! Wait for Admin approval." });
+         var registerWorker  = await  _repo.Repo_RegisterWorker(dto);
+            return Ok(registerWorker);
         }
 
         

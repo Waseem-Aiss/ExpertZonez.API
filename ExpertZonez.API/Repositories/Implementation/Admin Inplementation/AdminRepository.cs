@@ -70,7 +70,7 @@ namespace ExpertZonez.API.Repositories.Implementation
                 serviceName = serviceDto.serviceName,
                 serviceDescription = serviceDto.serviceDescription,
                 serviceImage = serviceDto.serviceIcon,
-                genreId = serviceDto.serviceGenreId
+                GenreId = serviceDto.serviceGenreId
             };
 
             _dbContext.Services.Add(service);
